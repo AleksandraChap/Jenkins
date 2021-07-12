@@ -1,0 +1,26 @@
+#!groovy
+// Check newNode server
+properties([disableConcurrentBuilds()]) // Запрет одновременных сборок
+
+pipeline {
+    agent { 
+        label 'newNode' 
+        }
+    options{
+        buildDiscarder(logRotator(numToKeepStr:'10', artifactNumToKeepStr: '10')) // Хранение логов и артифактов последних 10 сборок
+        timestamps() // Отображение времени
+        
+    }
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Hostname') {
+            steps {
+                sh '\'hostname\''
+            }
+        }
+    }
+}
